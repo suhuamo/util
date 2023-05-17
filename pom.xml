@@ -12,11 +12,24 @@
     </description>
 
     <properties>
-
+        <junit-version>4.13.1</junit-version>
+        <gson-version>2.9.1</gson-version>
     </properties>
 
     <dependencies>
-
+        <!--    测试类  -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit-version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- gson依赖，使用于 JsonObject -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson-version}</version>
+        </dependency>
     </dependencies>
 
 </project>
