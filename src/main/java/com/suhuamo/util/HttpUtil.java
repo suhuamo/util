@@ -30,10 +30,6 @@ import java.util.*;
  */
 public class HttpUtil {
 
-    public static void sayHi() {
-        System.out.println("hahahha");
-    }
-
     /**
      * 四种请求方式
      */
