@@ -1,7 +1,12 @@
 # util
 
 #### Description
-自定义的工具类
+自定义的工具类，目前包含对execel、http处理的工具
+## excel
+1. 读入数据
+2. 写入数据
+## http
+1.请求调用
 
 #### Software Architecture
 Software architecture description

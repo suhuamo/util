@@ -1,0 +1,6 @@
+# Project exclude paths
+/target/
+# idea自带文件
+/.idea
+# 测试类文件
+/src/test
