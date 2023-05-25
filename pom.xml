@@ -14,6 +14,8 @@
     <properties>
         <junit-version>4.13.1</junit-version>
         <gson-version>2.9.1</gson-version>
+        <org.apache.poi.version>4.0.0</org.apache.poi.version>
+        <com.monitorjbl.version>2.1.0</com.monitorjbl.version>
     </properties>
 
     <dependencies>
@@ -30,6 +32,25 @@
             <artifactId>gson</artifactId>
             <version>${gson-version}</version>
         </dependency>
+        <!--大规模excel处理依赖开始-->
+        <!--        读取Excel，大量读取需要使用Streaming进行缓存-->
+        <dependency>
+            <groupId>com.monitorjbl</groupId>
+            <artifactId>xlsx-streamer</artifactId>
+            <version>${com.monitorjbl.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>${org.apache.poi.version}</version>
+        </dependency>
+        <!--        写入Excel，无需Streaming式缓存-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>${org.apache.poi.version}</version>
+        </dependency>
+        <!--大规模excel处理依赖结束-->
     </dependencies>
 
     <build>

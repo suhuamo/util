@@ -1,4 +1,4 @@
-package com.suhuamo.util;
+package com.suhuamo.util.http;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
