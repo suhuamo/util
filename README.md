@@ -6,8 +6,9 @@ jdk 1.8
 v1.0.0
 # 使用教程
 第一种：
-    1. 将此工程通过mvn clean install打包到本地仓库中。
-    2. 然后在你的项目中的pom.xml加入如下依赖
+1. 下拉该项目或者下载源代码
+2. 将此工程通过`mvn clean install`打包到本地仓库中。
+3. 然后在你的项目中的pom.xml加入如下依赖
 ```
         <dependency>
             <groupId>com.suhuamo</groupId>
@@ -17,6 +18,7 @@ v1.0.0
         </dependency>
 ```
 第二种：
+
 本项目已经上传到了jitPack的中央仓库中，故用户可以直接通过maven下拉使用，pom.xml中的配置如下，
 ```
     <repositories>
