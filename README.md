@@ -5,15 +5,38 @@ jdk 1.8
 # 当前版本
 v1.0.0
 # 使用教程
-加入以下依赖即可
+第一种：
+    1. 将此工程通过mvn clean install打包到本地仓库中。
+    2. 然后在你的项目中的pom.xml加入如下依赖
 ```
         <dependency>
             <groupId>com.suhuamo</groupId>
             <artifactId>util</artifactId>
-            <version>${suhuamo.util-version}</version>
+        <!--        版本可自行配置，1.0.0版本一定可以运行-->
+            <version>1.0.0</version>
         </dependency>
 ```
-# 系统介绍
+第二种：
+本项目已经上传到了jitPack的中央仓库中，故用户可以直接通过maven下拉使用，pom.xml中的配置如下，
+```
+    <repositories>
+        <!--        配置jitpack的远程仓库-->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://www.jitpack.io</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.suhuamo</groupId>
+            <artifactId>util</artifactId>
+        <!--        版本可自行配置，1.0.0版本一定可以运行-->
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+```
+# 功能介绍
 ## 1.HttpUtil
 可进行 Http进行请求
 ```java
