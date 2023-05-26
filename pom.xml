@@ -69,6 +69,17 @@
                     </execution>
                 </executions>
             </plugin>
+            <!--   配置maven项目的参数属性 -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>1.8</source>   <!-- 指定源代码版本 -->
+                    <target>1.8</target>   <!-- 指定目标字节码版本 -->
+                    <encoding>UTF-8</encoding>  <!-- 指定项目的字符版本 -->
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 
