@@ -10,12 +10,12 @@ import java.util.concurrent.*;
  */
 public class ThreadPoolUtil {
 	/**
-	 * 初始线程数-即最小线程数
+	 * 初始线程数-即最小线程数,默认使用CPU的数量
+	 * System.out.println(Runtime.getRuntime().availableProcessors()); //输出本机CPU的数量,是一个数字
 	 */
-	public static final int corePoolSize = 4;
+	public static final int corePoolSize = cpuNum();
 	/**
 	 * 最大线程数-一般线程池大小设置为 2N+1 (N为CPU数量)
-	 * System.out.println(Runtime.getRuntime().availableProcessors()); //输出本机CPU的数量,是一个数字
 	 */
 	public static final int maxPoolSize = desiredThreadNum();
 	/**
@@ -47,5 +47,12 @@ public class ThreadPoolUtil {
 	 */
 	private static int desiredThreadNum() {
 		return Runtime.getRuntime().availableProcessors() * 2 + 1;
+	}
+
+	/**
+	 * cpu的核心数
+	 */
+	private static int cpuNum() {
+		return Runtime.getRuntime().availableProcessors();
 	}
 }
