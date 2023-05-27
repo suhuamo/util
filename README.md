@@ -42,24 +42,81 @@ v1.0.0
 ## 1.HttpUtil
 可进行 Http进行请求
 ```java
-public void http()
-{
-    String url = "http://www.baidu.com";
-//    获取请求结果，post，delete同样，且后面可以加参数
-    JsonObject jsonObject = HttpUtil.sendGet(url);
+public class HttpTest {
+
+    @Test
+    public void sendGet() {
+        // 请求地址
+        String url = "http://www.baidu.com";
+        // 获取返回值
+        JsonObject jsonObject = HttpUtil.sendGet(url);
+        System.out.println("jsonObject = " + jsonObject);
+        // 拼接参数
+        Map<String, String> params = new HashMap<>();
+        params.put("name", "小花");
+        params.put("age", "18");
+        jsonObject = HttpUtil.sendGet(url, params);
+        System.out.println("jsonObject = " + jsonObject);
+        // 请求头参数
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authoration", "token xxx123");
+        jsonObject = HttpUtil.sendGet(url, params, headers);
+        System.out.println("jsonObject = " + jsonObject);
+    }
+
+    // Put和Delete同理
+    @Test
+    public void sendPost() {
+        // 请求地址
+        String url = "http://www.baidu.com";
+        // 请求数据
+        Person person = new Person();
+        // 获取返回值
+        JsonObject jsonObject = HttpUtil.sendPost(url, person);
+        System.out.println("jsonObject = " + jsonObject);
+        // 请求头参数
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Authoration", "token xxx123");
+        jsonObject = HttpUtil.sendPost(url, person, headers);
+        System.out.println("jsonObject = " + jsonObject);
+    }
+
+    class Person {
+        String name;
+        Integer age;
+    }
 }
 ```
 ## 2.ExcelUtil
 ```java
-public void excel()
-{
+public class ExcelTest {
+    @Test
+    public void readExcelTest() throws Exception {
+        // 文件地址
         String file = "E:\\info\\test\\test.xlsx";
-        // 接受到excel的数据
+        // 读取文件数据
         List<Map<Integer, Object>> maps = ExcelUtil.readExcel(new File(file));
         maps.forEach(e -> {
             e.forEach((k, v) -> {
                 System.out.println(k + ": " + v);
             });
         });
+    }
+
+    @Test
+    public void writeExcelTest() throws Exception {
+        // 文件地址
+        String file = "E:\\info\\test\\write.xlsx";
+        List<List<Object>> data = new ArrayList<>();
+        for (int i = 0; i < 10; i++) {
+            List<Object> row = new ArrayList<>();
+            for (int j = 0; j < 10; j++) {
+                row.add(j);
+            }
+            data.add(row);
+        }
+        // 写入文件数据
+        ExcelUtil.writeExcel(new File(file),data);
+    }
 }
 ```
