@@ -46,7 +46,31 @@ public class ExcelUtil {
      * @param file excel文件，格式必须为 xlsx格式
      * @return List<Map<String, Object>>
      */
+    public static List<Map<Integer, Object>> readExcel(File file, Integer sheetIndex) throws Exception {
+        return readBigExcel(file, sheetIndex);
+    }
+
+    /**
+     * 读取excel中的数据,读取该文件中的所有行的数据，并且读取每一列的信息,每一列的列名映射对应为列数,空行不读取
+     * 返回类型为List<Map<String, Object>>，每一行数据对应为一个map,map类型为<Integer,object>,对应属性为，列数(第几列)：单元格内容
+     * 格式限制：必须使用xlsx的格式，调用前需判断格式
+     *
+     * @param file excel文件，格式必须为 xlsx格式
+     * @return List<Map<String, Object>>
+     */
     public static List<Map<Integer, Object>> readExcel(File file) throws Exception {
+        return readBigExcel(file, SHEET_INDEX);
+    }
+
+    /**
+     * 读取excel中的数据,读取该文件中的所有行的数据，并且读取每一列的信息,每一列的列名映射对应为列数,空行不读取
+     * 返回类型为List<Map<String, Object>>，每一行数据对应为一个map,map类型为<Integer,object>,对应属性为，列数(第几列)：单元格内容
+     * 格式限制：必须使用xlsx的格式，调用前需判断格式
+     *
+     * @param file excel文件，格式必须为 xlsx格式
+     * @return List<Map<String, Object>>
+     */
+    private static List<Map<Integer, Object>> readBigExcel(File file, Integer sheetIndex) throws Exception {
         //定义返回值
         List<Map<Integer, Object>> resultList = new ArrayList<Map<Integer, Object>>();
         // 获取文件输入流
@@ -55,7 +79,7 @@ public class ExcelUtil {
                 .bufferSize(BUFFER_SIZE)  //读取资源时，缓存到内存的字节大小，默认是1024
                 .open(file);) { //打开资源，必须，可以是InputStream或者是File，注意：只能打开XLSX格式的文件
             // 读取工作簿，默认读取第0个工作簿
-            Sheet sheet = wk.getSheetAt(SHEET_INDEX);
+            Sheet sheet = wk.getSheetAt(sheetIndex);
             //定义单元格
             Cell cell = null;
             // 这里相当于读到哪个row了，就加载哪个row，所以是使用的缓存，所以在这一个for里面能遍历完所有的行，但是是每读了100(上面定义的100)个row就才开始又加载100row，但始终是在这个for里面加载的
