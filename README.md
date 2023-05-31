@@ -107,6 +107,7 @@ public class ExcelTest {
     public void writeExcelTest() throws Exception {
         // 文件地址
         String file = "E:\\info\\test\\write.xlsx";
+        // 存入的数据
         List<List<Object>> data = new ArrayList<>();
         for (int i = 0; i < 10; i++) {
             List<Object> row = new ArrayList<>();
@@ -119,4 +120,35 @@ public class ExcelTest {
         ExcelUtil.writeExcel(new File(file),data);
     }
 }
+```
+## 3.FileUtil
+```java
+public class FileTest {
+    @Test
+    public void getResourceFilePathTest() throws ClassNotFoundException {
+        String resourceFilePath = FileUtil.getResourceFilePath("t/2.txt");
+        System.out.println("resourceFilePath = " + resourceFilePath);
+    }
+
+    @Test
+    public void readFileTest() throws ClassNotFoundException, IOException {
+        // 获取resource文件夹下的1.txt文件的绝对路径
+        String resourceFilePath = FileUtil.getResourceFilePath("1.txt");
+        // 读取文件的内容
+        String s = FileUtil.readFile(resourceFilePath);
+        System.out.println("s = " + s);
+    }
+
+    @Test
+    public void writeFile() throws ClassNotFoundException, IOException {
+        // 获取resource文件夹下的1.txt文件的绝对路径
+        String resourceFilePath = FileUtil.getResourceFilePath("1.txt");
+        String content = "你好呀\n欢迎使用FileUtil\nO(∩_∩)O";
+        // 覆盖方式写入
+        FileUtil.writeFile(resourceFilePath, content);
+        // 追加方式写入
+        FileUtil.writeFile(resourceFilePath, content, true);
+    }
+}
+
 ```
