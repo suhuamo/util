@@ -43,6 +43,7 @@ public class FileUtil {
         return content;
     }
 
+
     /**
      * 将 content 内容以覆盖的形式写入 path 文件中
      *
@@ -51,13 +52,26 @@ public class FileUtil {
      * @return void
      */
     public static void writeFile(String path, String content) throws IOException {
+        writeFile(path, content, false);
+    }
+
+    /**
+     * 将 content 内容以append的形式写入 path 文件中
+     * 1.append为true则代表追加
+     * 2.append为false则代表覆盖
+     *
+     * @param path
+     * @param content
+     * @return void
+     */
+    public static void writeFile(String path, String content, Boolean append) throws IOException {
         // 创建文件
         File file = new File(path);
         file.createNewFile();
         // 进行写入数据
         byte bt[] = content.getBytes();
         // 以覆盖的形式，加上true参数代表追加
-        FileOutputStream in = new FileOutputStream(file);
+        FileOutputStream in = new FileOutputStream(file, append);
         in.write(bt, 0, bt.length);
         // 关闭流
         in.close();
