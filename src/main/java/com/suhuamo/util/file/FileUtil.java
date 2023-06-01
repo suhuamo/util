@@ -20,6 +20,15 @@ public class FileUtil {
     }
 
     /**
+     *  返回项目resources目录下的对应文件的文件输入流
+     * @param fileName 文件路径/名称
+     * @return String
+     */
+    public static InputStream getResourceFileInputStream(String fileName) {
+        return FileUtil.class.getResourceAsStream(fileName);
+    }
+
+    /**
      * 读取文件的所有内容
      *
      * @param path

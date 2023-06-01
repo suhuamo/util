@@ -44,10 +44,22 @@ public class ExcelUtil {
      * 格式限制：必须使用xlsx的格式，调用前需判断格式
      *
      * @param file excel文件，格式必须为 xlsx格式
-     * @return List<Map<String, Object>>
+     * @return List<Map < String, Object>>
      */
     public static List<Map<Integer, Object>> readExcel(File file, Integer sheetIndex) throws Exception {
-        return readBigExcel(file, sheetIndex);
+        return readBigExcel(file, null, sheetIndex);
+    }
+
+    /**
+     * 读取excel中的数据,读取该文件中的所有行的数据，并且读取每一列的信息,每一列的列名映射对应为列数,空行不读取
+     * 返回类型为List<Map<String, Object>>，每一行数据对应为一个map,map类型为<Integer,object>,对应属性为，列数(第几列)：单元格内容
+     * 格式限制：必须使用xlsx的格式，调用前需判断格式
+     *
+     * @param inputStream excel文件，格式必须为 xlsx格式
+     * @return List<Map < String, Object>>
+     */
+    public static List<Map<Integer, Object>> readExcel(InputStream inputStream, Integer sheetIndex) throws Exception {
+        return readBigExcel(null, inputStream, sheetIndex);
     }
 
     /**
@@ -56,10 +68,22 @@ public class ExcelUtil {
      * 格式限制：必须使用xlsx的格式，调用前需判断格式
      *
      * @param file excel文件，格式必须为 xlsx格式
-     * @return List<Map<String, Object>>
+     * @return List<Map < String, Object>>
      */
     public static List<Map<Integer, Object>> readExcel(File file) throws Exception {
-        return readBigExcel(file, SHEET_INDEX);
+        return readBigExcel(file, null, SHEET_INDEX);
+    }
+
+    /**
+     * 读取excel中的数据,读取该文件中的所有行的数据，并且读取每一列的信息,每一列的列名映射对应为列数,空行不读取
+     * 返回类型为List<Map<String, Object>>，每一行数据对应为一个map,map类型为<Integer,object>,对应属性为，列数(第几列)：单元格内容
+     * 格式限制：必须使用xlsx的格式，调用前需判断格式
+     *
+     * @param inputStream excel文件，格式必须为 xlsx格式
+     * @return List<Map < String, Object>>
+     */
+    public static List<Map<Integer, Object>> readExcel(InputStream inputStream) throws Exception {
+        return readBigExcel(null, inputStream, SHEET_INDEX);
     }
 
     /**
@@ -68,16 +92,25 @@ public class ExcelUtil {
      * 格式限制：必须使用xlsx的格式，调用前需判断格式
      *
      * @param file excel文件，格式必须为 xlsx格式
-     * @return List<Map<String, Object>>
+     * @return List<Map < String, Object>>
      */
-    private static List<Map<Integer, Object>> readBigExcel(File file, Integer sheetIndex) throws Exception {
+    private static List<Map<Integer, Object>> readBigExcel(File file, InputStream inputStream, Integer sheetIndex) throws Exception {
         //定义返回值
         List<Map<Integer, Object>> resultList = new ArrayList<Map<Integer, Object>>();
+        // 定义excel
+        Workbook wk = null;
+        StreamingReader.Builder builder = StreamingReader.builder()
+                .rowCacheSize(ROW_CACHE_SIZE)//缓存到内存中的行数，默认是10
+                .bufferSize(BUFFER_SIZE);//读取资源时，缓存到内存的字节大小，默认是1024
         // 获取文件输入流
-        try (Workbook wk = StreamingReader.builder()
-                .rowCacheSize(ROW_CACHE_SIZE)  //缓存到内存中的行数，默认是10
-                .bufferSize(BUFFER_SIZE)  //读取资源时，缓存到内存的字节大小，默认是1024
-                .open(file);) { //打开资源，必须，可以是InputStream或者是File，注意：只能打开XLSX格式的文件
+        // 也可以使用 try-with-resources ，即格式为 try(资源定义) {操作}，可以省去 catch 和 finally，会自动关闭资源
+        try {
+            //打开资源，必须，可以是InputStream或者是File，注意：只能打开XLSX格式的文件
+            if (file != null) {
+                wk = builder.open(file);
+            } else {
+                wk = builder.open(inputStream);
+            }
             // 读取工作簿，默认读取第0个工作簿
             Sheet sheet = wk.getSheetAt(sheetIndex);
             //定义单元格
@@ -107,14 +140,27 @@ public class ExcelUtil {
                 //一行循环完成，将该行的数据存入list
                 resultList.add(paramMap);
             }
+        } catch (Exception e) {
+            // 异常处理
+            e.printStackTrace();
+        } finally {
+            if (wk != null) {
+                try {
+                    wk.close(); // 注意要关闭Excel文档，释放资源
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
         }
+
         // 返回最终结果
         return resultList;
     }
 
 
     /**
-     *  将数据按行写入到excel文件中
+     * 将数据按行写入到excel文件中
+     *
      * @param file excel文件，格式可为 xlsx,xlx格式
      * @param data 写入的excel文件的完整数据，每一个List为一行数据
      * @return void

@@ -51,6 +51,12 @@
             <version>${org.apache.poi.version}</version>
         </dependency>
         <!--大规模excel处理依赖结束-->
+        <!-- Logback 日志实现 -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
     </dependencies>
 
     <build>
